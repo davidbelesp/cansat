@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>Datos</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <h1 class="title box">CanSat</h1>
+            <div class="graph box"></div>
+            <div class="table box">ESTO ES LA TABLA</div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    async function getData(){
+        const data = await fetch("./index.php")
+        return await data.json()
+    }
+
+    // const intervalo = setInterval(() => {
+    //     setGraph()
+    // }, 2000);
+
+        setTimeout(() => {
+            setGraph()
+        }, 0);
+
+    
+
+    async function setGraph(){
+        let datos = await getData()
+
+        const graphDiv = document.querySelector(".graph")
+
+        datos = datos["datos"]
+
+        traces = []
+
+        var traceX = []
+        datos.forEach(element => {
+            traceX.push(element["ID"])    
+        });
+
+        let options = ["temp","angulo","humedad"]
+
+        options.forEach((option) => {
+            trace = {}
+            traceY = []
+
+            datos.forEach(dato => {
+                traceY.push(dato[option])
+            });
+            
+
+            trace["x"] = traceX
+            trace["y"] = traceY
+
+            traces.push(trace)
+        })
+
+
+
+
+        Plotly.newPlot( graphDiv, traces, layout );
+
+        console.log(traceY)
+    }
+
+    function validateNumber(number){
+
+    }
+
+    var layout = {
+        autosize: true,
+        font:{
+            family: 'Courier New, monospace',
+            color:"000000"
+        },
+        legend:{
+            x:1,
+            y:0.5,
+            bgcolor:"#00000000",
+            font: {
+                family: 'sans-serif',
+                size: 12,
+                color: '#000000'
+                },
+        },
+        // width: 500,
+        height: 300,
+        margin: {
+            l: 50,
+            r: 10,
+            b: 60,
+            t: 30,
+            pad: 20
+        },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)'
+    };
+</script>
+
+</html>

@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+
+*{
+    font-family: 'Roboto Mono', monospace;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+
+}
+
+h1,h2,h3,h4,h5,h6{
+    margin: 0;
+}
+
+.wrapper{
+    background: url("https://nypost.com/wp-content/uploads/sites/2/2022/07/rocket-launch-getty-02.jpg") ; 
+    background-size: cover;
+    background-attachment: fixed;
+
+}
+
+.content{
+
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 30px;
+}
+
+.box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+
+   border-radius: 10px;
+   background: #FFFFFF99;
+   backdrop-filter: blur(10px);
+}
+
+.title{
+    width: 80vw;
+    margin-top: 30px;
+}
+
+.graph, .table{
+
+    width: 80vw;
+    min-height: 300px;
+}
