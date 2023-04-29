@@ -2,6 +2,7 @@
 
 *{
     font-family: 'Roboto Mono', monospace;
+    font-weight: bold;
 }
 
 body{
@@ -25,15 +26,17 @@ h1,h2,h3,h4,h5,h6{
 
 .content{
     display: grid;
-    gap: 10px;
+    gap: 20px;
 
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .temp, .humedad, .riesgo{
-    height: auto;
-    font-size: 4vw;
+    display: flex;
+    flex-direction: column;
+
+    height: 80%;
 
     min-height: 150px;
 }
@@ -52,15 +55,31 @@ h1,h2,h3,h4,h5,h6{
 
 .title{
     margin-top: 30px;
+    grid-column: 2/4;
+
+    font-size:5em;
 }
 
 .graph{
-    grid-column: 2/4;
+    grid-column: 2/5;
     grid-row: 2/4;
 }
 
 .table{
-    grid-column: 1/4;
+    grid-column: 1/5;
+    padding: 30px;
+    font-size: 1.1em;
+
+}
+
+table{
+    width: 100%;
+    text-align: center;
+
+}
+
+tr:nth-child(even){
+    background-color: rgba(255, 255, 255, 0.164);
 }
 
 .graph, .table{
@@ -70,7 +89,7 @@ h1,h2,h3,h4,h5,h6{
 
 
 .real-time{
-    justify-content: end;
+    justify-content: space-around;
     align-items: end;
 
     display: flex;
@@ -78,8 +97,8 @@ h1,h2,h3,h4,h5,h6{
 }
 
 button{
-    height: 40%;
-    width: 40%;
+    height: 30%;
+    min-width: 40%;
     cursor: pointer;
 
     font-size: 1em;
@@ -89,9 +108,6 @@ button{
 
     transition-duration: .3s;
 }
-
-.active{background: #2bff23;}
-.not-active{background: #cf5353;}
 
 button:hover{
     filter: brightness(.8);
@@ -103,4 +119,14 @@ button:hover{
     aspect-ratio: 1/1;
 
     border-radius: 1000px;
+
 }
+
+.active{background: #a9efa6;}
+.not-active{background: #d76969;}
+.number{
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 0;
+}
+

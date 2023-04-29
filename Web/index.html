@@ -12,7 +12,11 @@
 <body>
     <div class="wrapper">
         <div class="content">
-            <div class="temp box">31º</div>
+
+            <div class="temp box">
+                <p>Temperatura</p>
+                <p class="temp_number number">20ºC</p>
+            </div>
 
             <h1 class="title box">CanSat</h1>
 
@@ -21,15 +25,32 @@
                 <div class="rt-indicator not-active"></div>
             </div>
 
-            <div class="humedad box">20%</div>
+            <div class="humedad box">
+                <p>Humedad</p>
+                <p class="hum_number number">20%</p>
+            </div>
 
             <div class="graph box"></div>
 
-            <div class="riesgo box">45%</div>
+            <div class="riesgo box">
+                <p>Riesgo</p>
+                <p class="riesgo_number number">12%</p>
+            </div>
 
-            <div class="table box">ESTO ES LA TABLA</div>
-
-
+            <div class="table box">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>TEMPERATURA</td>
+                            <td>HUMEDAD</td>
+                            <td>MOMENTO ANGULAR</td>
+                        </tr>
+                    </thead>
+                    <tbody class="table-data">
+                    </tbody>
+                </table>
+            </div>
 
         </div>
 

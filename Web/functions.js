@@ -5,6 +5,21 @@ var intervalo;
 
 //--------------------------
 
+function riesgo(temp,hum){
+    let res;
+    if(temp>28 && hum<30) res= ((Math.random() * 5) + 70)
+    if(temp>28 && hum>30) res= ((Math.random() * 5) + 40)
+    if(temp<28 && hum<30) res= ((Math.random() * 5) + 40)
+    if(temp<28 && hum>30) res= ((Math.random() * 5) + 0)
+
+    else res= ((Math.random() * 5) + 25)
+
+    return Math.round(res*100)/100
+}
+
+function validateNumber(prev,number){
+    return !(Math.abs(prev-number) > 20)
+}
 
 function presion(tActual, altitud){
     P0 = 101325
@@ -28,7 +43,7 @@ async function setGraph(){
 
     const graphDiv = document.querySelector(".graph")
 
-    traces = []
+    let traces = []
 
     let prevNumber = null
     let actualNumber = null
@@ -66,7 +81,7 @@ async function setGraph(){
                 break;
             case "humedad": trace["name"] = "Humedad"   
                 break;
-            case "humedad": trace["name"] = "Angulo"   
+            case "angulo": trace["name"] = "Angulo"   
                 break;
             default: trace["name"] = "Unknown" 
                 break;
@@ -84,30 +99,33 @@ async function setGraph(){
     Plotly.newPlot( graphDiv, traces, layout );
 
     setSideNumbers(datos)
+    setTable(datos)
 }
 
 function setSideNumbers(datos){
-    const humText = document.querySelector(".humedad")
-    const tempText = document.querySelector(".temp")
-    const riesgoText = document.querySelector(".riesgo")
+    const humText = document.querySelector(".hum_number")
+    const tempText = document.querySelector(".temp_number")
+    const riesgoText = document.querySelector(".riesgo_number")
     
     lastData = datos[datos.length-1]
 
+    riesgoN = riesgo(lastData["temp"],lastData["humedad"])
+
     tempText.innerHTML = `${lastData["temp"]}°C`
     humText.innerHTML = `${lastData["humedad"]}%`
-    riesgoText.innerHTML = `${lastData["angulo"]}%`
+    riesgoText.innerHTML = `${riesgoN}%`
 }
 
-function validateNumber(prev,number){
-    return !(Math.abs(prev-number) > 20)
-}
+
 
 function realTimeToggle(event){
 
-    document.querySelector("")
+    const indicator = document.querySelector(".rt-indicator")
+
+    indicator.classList.toggle("active")
+    indicator.classList.toggle("not-active")
     
     if(REALTIME){
-
         return clearInterval(intervalo);
     } 
     
@@ -117,6 +135,35 @@ function realTimeToggle(event){
     }, 2000);
 }
 
+
+function setTable(datos){
+
+    
+    const table = document.querySelector(".table-data")
+
+    table.innerHTML = ""
+    
+
+    datos.forEach((dato) => {
+        newTableRow = document.createElement("tr")
+
+        newIDData = document.createElement("td")
+        newTempData = document.createElement("td")
+        newHumData = document.createElement("td")
+        newAnguloData = document.createElement("td")
+
+        newIDData.innerHTML = dato["ID"]
+        newTempData.innerHTML = dato["temp"]
+        newHumData.innerHTML = dato["humedad"]
+        newAnguloData.innerHTML = dato["angulo"]
+
+        newTableRow.appendChild(newIDData)
+        newTableRow.appendChild(newTempData)
+        newTableRow.appendChild(newHumData)
+        newTableRow.appendChild(newAnguloData)
+        table.appendChild(newTableRow)
+    })
+}
 
 
 var layout = {
