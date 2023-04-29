@@ -1,12 +1,12 @@
 import serial
 import time
-import mysql.connector
+import mysql.connector  # python -m pip install mysql-connector-python
 import pymysql
 from mysql.connector import Error
 from datetime import datetime
 
 
-PORT = "COM7"
+PORT = "COM3"
 RATE = 9600
 
 def getDataBaseConnection():
@@ -34,8 +34,9 @@ def getSerialPortConnection():
             time.sleep(2)  # Damos 2 segundos para realizar la conexion con el puerto serie
             print("Conexion con Serial Port exitosa\n-Esperando lecturas...")
             return serialPort
-        except:
+        except Error:
             print("== Fallo al conectar con Serial Port ==")
+            print(Error)
             return False
     else:
         print("== Fallo al conectar con la Base de Datos ==")

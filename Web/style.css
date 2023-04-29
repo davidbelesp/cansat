@@ -27,12 +27,15 @@ h1,h2,h3,h4,h5,h6{
     display: grid;
     gap: 10px;
 
+
     grid-template-columns: repeat(3, 1fr);
 }
 
 .temp, .humedad, .riesgo{
     height: auto;
     font-size: 4vw;
+
+    min-height: 150px;
 }
 
 .box{
@@ -43,7 +46,7 @@ h1,h2,h3,h4,h5,h6{
     padding: 10px;
 
     border-radius: 10px;
-    background: #FFFFFF99;
+    background: #FFFFFF77;
     backdrop-filter: blur(10px);
 }
 
@@ -65,21 +68,39 @@ h1,h2,h3,h4,h5,h6{
     min-height: 300px;
 }
 
+
+.real-time{
+    justify-content: end;
+    align-items: end;
+
+    display: flex;
+    gap: 10px;
+}
+
 button{
-    height: 100%;
-    width: 100%;
+    height: 40%;
+    width: 40%;
+    cursor: pointer;
 
-    font-size: 2em;
+    font-size: 1em;
 
-    background: #ff4646;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
+
+    transition-duration: .3s;
 }
 
-.active{
-    background: #2bff23;
-}
+.active{background: #2bff23;}
+.not-active{background: #cf5353;}
 
 button:hover{
     filter: brightness(.8);
+}
+
+.rt-indicator{
+    width: 50px;
+    height: 50px;
+    aspect-ratio: 1/1;
+
+    border-radius: 1000px;
 }

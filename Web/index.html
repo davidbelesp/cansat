@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="./style.css">
+    <script src="./functions.js"></script>
     <title>Datos</title>
 </head>
 <body>
@@ -15,8 +16,10 @@
 
             <h1 class="title box">CanSat</h1>
 
-            <button id="real-time box" onclick="realTimeToggle(event)">Real-Time</button>
-
+            <div class="real-time">
+                <button onclick="realTimeToggle(event)">Real-Time</button>
+                <div class="rt-indicator not-active"></div>
+            </div>
 
             <div class="humedad box">20%</div>
 
@@ -34,126 +37,18 @@
 </body>
 
 <script>
-
-
-
-    async function getData(){
-        const data = await fetch("./api.php")
-        return await data.json()
-    }
-
-    // const intervalo = setInterval(() => {
-    //     setGraph()
-    // }, 2000);
-
+    //PONE LA GRAFICA POR PRIMERA VEZ CUANDO SE ABRE LA PAGINA
     setTimeout(() => {
         setGraph()
     }, 0);
-
-    
-
-    async function setGraph(){
-        let datos = await getData()
-
-        const graphDiv = document.querySelector(".graph")
-        const humText = document.querySelector(".humedad")
-        const tempText = document.querySelector(".temp")
-        const riesgoText = document.querySelector(".riesgo")
-
-        datos = datos["datos"]
-
-        traces = []
-
-        let prevNumber = null
-        let actualNumber = null
-
-        var traceX = []
-        datos.forEach(element => {
-            traceX.push(element["ID"])
-        });
-
-        let options = ["temp","angulo","humedad"]
-
-        options.forEach((option) => {
-            if(!prevNumber) prevNumber = datos[0][option]
-
-            trace = {}
-            traceY = []
-
-            datos.forEach(dato => {
-                actualNumber = dato[option]
-
-                if(!(option == "angulo")){
-                    
-                    
-                    if(validateNumber(prevNumber,actualNumber))prevNumber = actualNumber;
-                    else actualNumber = prevNumber
-
-                }
-
-                traceY.push(actualNumber);
-                
-            });
-            
-
-            trace["x"] = traceX
-            trace["y"] = traceY
-
-            traces.push(trace)
-
-            prevNumber = null;
-
-        })
-
-        Plotly.newPlot( graphDiv, traces, layout );
-
-    }
-
-    function validateNumber(prev,number){
-        return !(Math.abs(prev-number) > 20)
-
-    }
-
-    var layout = {
-        autosize: true,
-        font:{
-            family: 'Courier New, monospace',
-            color:"000000"
-        },
-        legend:{
-            x:1,
-            y:0.5,
-            bgcolor:"#00000000",
-            font: {
-                family: 'sans-serif',
-                size: 12,
-                color: '#000000'
-                },
-        },
-        // width: 500,
-        height: 300,
-        margin: {
-            l: 50,
-            r: 10,
-            b: 60,
-            t: 30,
-            pad: 20
-        },
-        paper_bgcolor: 'rgba(0,0,0,0)',
-        plot_bgcolor: 'rgba(0,0,0,0)'
-    };
-
-    function realTimeToggle(event){
-
-    }
-</script>
-
-
-
-<script>
+    //CADA VEZ QUE SE CAMBIE EL TAMAÑO DE LA PANTALLA SE ACTUALIZA LA GRAFICA
     addEventListener("resize", (event) => {
         setGraph();
     });
+</script>
+
+<script>
+    
 </script>
 
 </html>
