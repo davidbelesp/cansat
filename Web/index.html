@@ -11,17 +11,34 @@
 <body>
     <div class="wrapper">
         <div class="content">
+            <div class="temp box">31º</div>
+
             <h1 class="title box">CanSat</h1>
+
+            <button id="real-time box" onclick="realTimeToggle(event)">Real-Time</button>
+
+
+            <div class="humedad box">20%</div>
+
             <div class="graph box"></div>
+
+            <div class="riesgo box">45%</div>
+
             <div class="table box">ESTO ES LA TABLA</div>
+
+
+
         </div>
 
     </div>
 </body>
 
 <script>
+
+
+
     async function getData(){
-        const data = await fetch("./index.php")
+        const data = await fetch("./api.php")
         return await data.json()
     }
 
@@ -29,9 +46,9 @@
     //     setGraph()
     // }, 2000);
 
-        setTimeout(() => {
-            setGraph()
-        }, 0);
+    setTimeout(() => {
+        setGraph()
+    }, 0);
 
     
 
@@ -39,24 +56,43 @@
         let datos = await getData()
 
         const graphDiv = document.querySelector(".graph")
+        const humText = document.querySelector(".humedad")
+        const tempText = document.querySelector(".temp")
+        const riesgoText = document.querySelector(".riesgo")
 
         datos = datos["datos"]
 
         traces = []
 
+        let prevNumber = null
+        let actualNumber = null
+
         var traceX = []
         datos.forEach(element => {
-            traceX.push(element["ID"])    
+            traceX.push(element["ID"])
         });
 
         let options = ["temp","angulo","humedad"]
 
         options.forEach((option) => {
+            if(!prevNumber) prevNumber = datos[0][option]
+
             trace = {}
             traceY = []
 
             datos.forEach(dato => {
-                traceY.push(dato[option])
+                actualNumber = dato[option]
+
+                if(!(option == "angulo")){
+                    
+                    
+                    if(validateNumber(prevNumber,actualNumber))prevNumber = actualNumber;
+                    else actualNumber = prevNumber
+
+                }
+
+                traceY.push(actualNumber);
+                
             });
             
 
@@ -64,17 +100,17 @@
             trace["y"] = traceY
 
             traces.push(trace)
+
+            prevNumber = null;
+
         })
-
-
-
 
         Plotly.newPlot( graphDiv, traces, layout );
 
-        console.log(traceY)
     }
 
-    function validateNumber(number){
+    function validateNumber(prev,number){
+        return !(Math.abs(prev-number) > 20)
 
     }
 
@@ -106,6 +142,18 @@
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)'
     };
+
+    function realTimeToggle(event){
+
+    }
+</script>
+
+
+
+<script>
+    addEventListener("resize", (event) => {
+        setGraph();
+    });
 </script>
 
 </html>

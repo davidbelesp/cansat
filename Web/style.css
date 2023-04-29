@@ -15,22 +15,24 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .wrapper{
+    padding: 30px;
     background: url("https://nypost.com/wp-content/uploads/sites/2/2022/07/rocket-launch-getty-02.jpg") ; 
     background-size: cover;
     background-attachment: fixed;
 
+    min-height: 100vh;
 }
 
 .content{
+    display: grid;
+    gap: 10px;
 
+    grid-template-columns: repeat(3, 1fr);
+}
 
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-
-    gap: 30px;
+.temp, .humedad, .riesgo{
+    height: auto;
+    font-size: 4vw;
 }
 
 .box{
@@ -40,18 +42,44 @@ h1,h2,h3,h4,h5,h6{
 
     padding: 10px;
 
-   border-radius: 10px;
-   background: #FFFFFF99;
-   backdrop-filter: blur(10px);
+    border-radius: 10px;
+    background: #FFFFFF99;
+    backdrop-filter: blur(10px);
 }
 
 .title{
-    width: 80vw;
     margin-top: 30px;
+}
+
+.graph{
+    grid-column: 2/4;
+    grid-row: 2/4;
+}
+
+.table{
+    grid-column: 1/4;
 }
 
 .graph, .table{
 
-    width: 80vw;
     min-height: 300px;
+}
+
+button{
+    height: 100%;
+    width: 100%;
+
+    font-size: 2em;
+
+    background: #ff4646;
+    border: none;
+    border-radius: 5px;
+}
+
+.active{
+    background: #2bff23;
+}
+
+button:hover{
+    filter: brightness(.8);
 }
