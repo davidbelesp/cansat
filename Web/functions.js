@@ -6,11 +6,11 @@ var intervalo;
 //--------------------------
 
 function riesgo(temp,hum){
-    //<30 chill  verde
-    //>30 && <50 amarillo
+    //<40 chill  verde
+    //>40 && <60 amarillo
     //>60 <75 alto naranja
     //>75 rojo
-    let risk=(((temp + ((100-hum/2))))/100)**2;
+    let risk=(((temp + ((100-hum)/2)))/100)**2;
     risk=Math.round(risk*100);
     return risk;
 }
@@ -42,6 +42,13 @@ async function setGraph(){
     const graphDiv = document.querySelector(".graph")
 
     let traces = []
+    let altitudes = []
+
+    datos["temp"].forEach(temp =>{
+        altitudes.push(altuitud(temp))
+    })
+
+    datos["altitud"]=altitudes
 
     let prevNumber = null
     let actualNumber = null
@@ -51,7 +58,7 @@ async function setGraph(){
         traceX.push(element["ID"])
     });
 
-    let options = ["temp","angulo","humedad"]
+    let options = ["temp","angulo","humedad","altitud"]
 
     options.forEach((option) => {
         if(!prevNumber) prevNumber = datos[0][option]
