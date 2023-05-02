@@ -6,12 +6,27 @@ var intervalo;
 //--------------------------
 
 function riesgo(temp,hum){
+    const numeroHtml = document.querySelector(".riesgo_number")
     //<40 chill  verde
     //>40 && <60 amarillo
     //>60 <75 alto naranja
     //>75 rojo
     let risk=(((temp + ((100-hum)/2)))/100)**2;
     risk=Math.round(risk*100);
+
+    if(risk<40){
+        numeroHtml.style.color = "#009933"
+    }
+    if(risk>=40 && risk<60){
+        numeroHtml.style.color = "#ffff00"
+    }
+    if(risk>=60 && risk<75){
+        numeroHtml.style.color = "#ff6600"
+    }
+    if(risk>=75){
+        numeroHtml.style.color = "#ff0000"
+    }
+
     return risk;
 }
 
@@ -27,7 +42,7 @@ function presion(tActual, altitud){
 
 function altitud(tactual){
     T0 = 27
-    return (T0-tactual)*(100/0.65);
+    return (T0-tactual)*(16);
 }
 
 async function getData(){
