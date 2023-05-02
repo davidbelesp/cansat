@@ -6,7 +6,7 @@ from mysql.connector import Error
 from datetime import datetime
 
 
-PORT = "COM3"
+PORT = "COM7"
 RATE = 9600
 
 def getDataBaseConnection():

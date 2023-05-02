@@ -6,12 +6,16 @@ var intervalo;
 //--------------------------
 
 function riesgo(temp,hum){
-      //<30 chill  verde
-    //>30 && <50 amarillo
-    //>60 <75 alto naranja
-    //>75 rojo
+    const numeroHtml = document.querySelector(".riesgo_number")
+
     let risk=(((temp + ((100-hum)/2)))/100)**2;
     risk=Math.round(risk*100);
+
+    if(risk<40) numeroHtml.style.color = "#009933"
+    if(risk>=40 && risk<60) numeroHtml.style.color = "#ffff00"
+    if(risk>=60 && risk<75) numeroHtml.style.color = "#ff6600"
+    if(risk>=75) numeroHtml.style.color = "#ff0000"
+
     return risk;
 }
 
