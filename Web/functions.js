@@ -6,15 +6,13 @@ var intervalo;
 //--------------------------
 
 function riesgo(temp,hum){
-    let res;
-    if(temp>28 && hum<30) res= ((Math.random() * 5) + 70)
-    if(temp>28 && hum>30) res= ((Math.random() * 5) + 40)
-    if(temp<28 && hum<30) res= ((Math.random() * 5) + 40)
-    if(temp<28 && hum>30) res= ((Math.random() * 5) + 0)
-
-    else res= ((Math.random() * 5) + 25)
-
-    return Math.round(res*100)/100
+      //<30 chill  verde
+    //>30 && <50 amarillo
+    //>60 <75 alto naranja
+    //>75 rojo
+    let risk=(((temp + ((100-hum)/2)))/100)**2;
+    risk=Math.round(risk*100);
+    return risk;
 }
 
 function validateNumber(prev,number){
@@ -108,13 +106,17 @@ function setSideNumbers(datos){
     const riesgoText = document.querySelector(".riesgo_number")
     
     lastData = datos[datos.length-1]
+    console.log("1: > " + riesgo(27,27))
+    console.log("2: > " + riesgo(10,55))
+    console.log("3: > " + riesgo(55,7))
+    console.log("4: > " + riesgo(6,10))
 
     riesgoN = riesgo(lastData["temp"],lastData["humedad"])
 
     tempText.innerHTML = `${lastData["temp"]}°C`
     humText.innerHTML = `${lastData["humedad"]}%`
     riesgoText.innerHTML = `${riesgoN}%`
-}
+}image.png
 
 
 
