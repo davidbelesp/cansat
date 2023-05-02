@@ -116,7 +116,7 @@ function setSideNumbers(datos){
     tempText.innerHTML = `${lastData["temp"]}°C`
     humText.innerHTML = `${lastData["humedad"]}%`
     riesgoText.innerHTML = `${riesgoN}%`
-}image.png
+}
 
 
 
