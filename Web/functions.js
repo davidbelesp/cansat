@@ -23,6 +23,11 @@ function validateNumber(prev,number){
     return !(Math.abs(prev-number) > 20)
 }
 
+function validateMaxMin(number,max,min){
+    if(number > max || number < min) return "N/A" 
+    return number
+}
+
 function presion(tActual, altitud){
     P0 = 101325
     //presion en pasacles y devuelve en pascales
@@ -67,11 +72,11 @@ async function setGraph(){
             actualNumber = dato[option]
 
             if(!(option == "angulo")){
-                
-                
+
                 if(validateNumber(prevNumber,actualNumber))prevNumber = actualNumber;
                 else actualNumber = prevNumber
-
+            } else {
+                actualNumber = angleToDegrees(actualNumber)
             }
 
             traceY.push(actualNumber);
@@ -110,18 +115,19 @@ function setSideNumbers(datos){
     const riesgoText = document.querySelector(".riesgo_number")
     
     lastData = datos[datos.length-1]
-    console.log("1: > " + riesgo(27,27))
-    console.log("2: > " + riesgo(10,55))
-    console.log("3: > " + riesgo(55,7))
-    console.log("4: > " + riesgo(6,10))
 
-    riesgoN = riesgo(lastData["temp"],lastData["humedad"])
+    let riesgoN = riesgo(lastData["temp"],lastData["humedad"])
 
     tempText.innerHTML = `${lastData["temp"]}°C`
     humText.innerHTML = `${lastData["humedad"]}%`
     riesgoText.innerHTML = `${riesgoN}%`
 }
 
+
+function angleToDegrees(angle){
+    const A0 = 7.22 //1300 = 180 degrees - 7.22/degree
+    return (Math.round((angle/A0/2)*100)/100)*-1
+}
 
 
 function realTimeToggle(event){
@@ -158,10 +164,12 @@ function setTable(datos){
         newHumData = document.createElement("td")
         newAnguloData = document.createElement("td")
 
-        newIDData.innerHTML = dato["ID"]
-        newTempData.innerHTML = dato["temp"]
-        newHumData.innerHTML = dato["humedad"]
-        newAnguloData.innerHTML = dato["angulo"]
+        newIDData.innerHTML = `${dato["ID"]}`
+        newTempData.innerHTML = `${validateMaxMin(dato["temp"],50,5)}°C`
+        newHumData.innerHTML = `${validateMaxMin(dato["humedad"],100,0)}%`
+        newAnguloData.innerHTML = `${angleToDegrees(dato["angulo"])}°`
+
+        
 
         newTableRow.appendChild(newIDData)
         newTableRow.appendChild(newTempData)
